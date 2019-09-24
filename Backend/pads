@@ -1,3 +1,7 @@
-class WaitForInput():
-  
+int inputPin = 13; // input connect to pin 13
+int outputPin = 15; // output connect to pin 15
+void setup(){
+  PinMode(inputPin, Receive); // sets inputpin as received
+  PinMode(outputpin, output); //sets outputpin as output
+} 
 
