@@ -36,5 +36,5 @@ if __name__ == "__main__":
     root = tk.Tk()
     main = App(root)
     main.pack(side="top", fill="both", expand=True)
-    root.wm_geometry("400x400")
+    root.wm_geometry("400x400+120+120")
     root.mainloop()
