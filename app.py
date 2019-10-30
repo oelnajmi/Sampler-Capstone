@@ -2,6 +2,7 @@ import tkinter as tk
 from components.pages.listen import Listen
 from components.pages.produce import Produce
 from components.pages.home import Home
+from hardware.interface import Interface
 
 
 class App(tk.Frame):
@@ -31,6 +32,7 @@ class App(tk.Frame):
 
 
 if __name__ == "__main__":
+    hardware_interface = Interface()
     root = tk.Tk()
     main = App(root)
     main.pack(side="top", fill="both", expand=True)
