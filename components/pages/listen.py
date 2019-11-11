@@ -42,5 +42,3 @@ class Listen(Page):
             # need to configure command
             Button(self, text="Play").grid(row=counter, column=2, sticky=ALL)
             counter = counter + 1
-
-

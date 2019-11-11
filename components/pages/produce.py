@@ -1,9 +1,4 @@
 from components.pages.page import Page
-import tkinter as tk
-from components.home_button import HomeButton
-from components.pad_button import PadButton
-from components.effect_button import EffectButton
-import tkinter as tk
 from tkinter import *
 
 ALL = N+S+W+E
@@ -44,5 +39,3 @@ class Produce(Page):
 
         # Need to configure command
         Button(self, text="Reset").grid(row=0, column=8, sticky=ALL)
-
-
