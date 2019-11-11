@@ -2,15 +2,21 @@ import tkinter as tk
 from components.pages.listen import Listen
 from components.pages.produce import Produce
 from components.pages.home import Home
+from components.pages.setup_pad_step_one import SetupPadStepOne
+from components.pages.setup_pad_step_two import SetupPadStepTwo
 from hardware.interface import Interface
 
 
 class App(tk.Frame):
     def __init__(self, *args, **kwargs):
+        self.hardware_interface = Interface()
+
         tk.Frame.__init__(self, *args, **kwargs)
         self.listen = Listen(self)
         self.produce = Produce(self)
         self.home = Home(self)
+        self.set_up_pad_step_one = SetupPadStepOne(self)
+        self.set_up_pad_step_two = SetupPadStepTwo(self)
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
@@ -18,6 +24,8 @@ class App(tk.Frame):
         self.listen.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
         self.produce.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
         self.home.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
+        self.set_up_pad_step_one.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
+        self.set_up_pad_step_two.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
 
         self.show_home()
 
@@ -30,9 +38,22 @@ class App(tk.Frame):
     def show_home(self):
         self.home.show()
 
+    def show_set_up_pad_step_one(self, pad_row, pad_column):
+        self.set_up_pad_step_one.set_pad(pad_row, pad_column)
+        self.set_up_pad_step_one.show()
+
+    def show_set_up_pad_step_two(self, track, pad_row, pad_column):
+        self.set_up_pad_step_two.setup(track, pad_row, pad_column)
+        self.set_up_pad_step_two.show()
+
+    def get_produce_page(self):
+        return self.produce
+
+    def get_hardware_interface(self):
+        return self.hardware_interface
+
 
 if __name__ == "__main__":
-    hardware_interface = Interface()
     root = tk.Tk()
     main = App(root)
     main.pack(side="top", fill="both", expand=True)

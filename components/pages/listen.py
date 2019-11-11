@@ -1,9 +1,8 @@
 from components.pages.page import Page
 import tkinter as tk
-from components.home_button import HomeButton
+from services.audio_services import AudioServices
 from services.files_services import FilesServices
 from tkinter import *
-from components.volume_slider import VolumeSlider
 
 ALL = N + S + W + E
 
@@ -16,6 +15,10 @@ class Listen(Page):
         self.master.columnconfigure(0, weight=1)
         self.grid(sticky=ALL)
 
+        self.play_buttons = []
+        self.play_button_texts = []
+        self.play_button_status = []
+
         for c in range(4):
             if c == 1:
                 self.columnconfigure(c, weight=3)
@@ -27,7 +30,7 @@ class Listen(Page):
         frame1 = Frame(self, width=25, height=25)
         frame1.grid(row=0, column=2, sticky=ALL)
         Scale(frame1, from_=0, to=100, orient=HORIZONTAL).pack()
-        label1 = Label(frame1, text='Volume').pack()
+        Label(frame1, text='Volume').pack()
 
         self.master.rowconfigure(1, weight=100)
         Label(self, text="").grid(row=1, column=1, sticky=W)
@@ -35,10 +38,27 @@ class Listen(Page):
         Label(self, text="Name").grid(row=2, column=1, sticky=W)
         Label(self, text="").grid(row=3, column=1, sticky=W)
 
-        counter = 4
-        for song in FilesServices.get_tracks():
-            self.master.rowconfigure(counter, weight=100)
-            Label(self, text=song).grid(row=counter, column=1, sticky=W)
-            # need to configure command
-            Button(self, text="Play").grid(row=counter, column=2, sticky=ALL)
-            counter = counter + 1
+        tracks = FilesServices.get_tracks()
+        for index, song in enumerate(tracks):
+            self.master.rowconfigure(index + 4, weight=100)
+            Label(self, text=song).grid(row=index + 4, column=1, sticky=W)
+            self.play_button_status.append(False)
+            self.play_button_texts.append(tk.StringVar())
+            self.play_buttons.append(Button(self, textvariable=self.play_button_texts[index], command=lambda i=index: self.__on_play_button_clicked(tracks[i], i)).grid(row=index + 4, column=2, sticky=ALL))
+            self.play_button_texts[index].set("Play")
+
+    def __on_play_button_clicked(self, track, index):
+        if self.play_button_status[index] is False:
+            AudioServices.play_track(track)
+            self.__reset_all_play_buttons()
+            self.play_button_status[index] = True
+            self.play_button_texts[index].set("Stop")
+        else:
+            AudioServices.end_track()
+            self.play_button_status[index] = False
+            self.play_button_texts[index].set("Play")
+
+    def __reset_all_play_buttons(self):
+        for index in range(len(self.play_button_texts)):
+            self.play_button_texts[index].set("Play")
+            self.play_button_status[index] = False
