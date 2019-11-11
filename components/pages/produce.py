@@ -1,9 +1,4 @@
 from components.pages.page import Page
-import tkinter as tk
-from components.home_button import HomeButton
-from components.pad_button import PadButton
-from components.effect_button import EffectButton
-import tkinter as tk
 from tkinter import *
 
 ALL = N+S+W+E
@@ -37,7 +32,10 @@ class Produce(Page):
             for c in range (5,8):
                 Button(self, text="Effect Knob").grid(row=r, column=c, sticky=ALL)
 
-        frame1 = Frame(self, width=25, height=25)
-        frame1.grid(row=4, column=6, sticky=ALL)
+        frame1 = Frame(self, width=20, height=20)
+        frame1.grid(row=0, column=6, sticky=ALL)
         Scale(frame1, from_=0, to=100, orient=HORIZONTAL).pack()
         label1 = Label(frame1, text='Volume').pack()
+
+        # Need to configure command
+        Button(self, text="Reset").grid(row=0, column=8, sticky=ALL)
