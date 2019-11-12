@@ -10,12 +10,12 @@ class Interface:
                 self.pads[i][j] = Pad()
         PadScanner(self)
 
-    def assign_sample_to_pad(self, row, column, sample):
+    def assign_sample_to_pad(self, row, column, track, start, end):
         if row > 3:
             return False
         if column > 3:
             return False
-        self.pads[row][column].assign_sample(sample)
+        self.pads[row][column].assign_sample(track, start, end)
 
     def reset(self):
         for i in range(4):
