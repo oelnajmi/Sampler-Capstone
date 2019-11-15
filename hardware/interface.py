@@ -4,10 +4,10 @@ from hardware.pad_scanner import PadScanner
 
 class Interface:
     def __init__(self):
-        self.pads = [[None] * 4] * 4
+        self.pads = [[], [], [], []]
         for i in range(4):
             for j in range(4):
-                self.pads[i][j] = Pad()
+                self.pads[i].append(Pad())
         PadScanner(self)
 
     def assign_sample_to_pad(self, row, column, track, start, end):
