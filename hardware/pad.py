@@ -1,3 +1,6 @@
+from services.audio_services import AudioServices
+
+
 class Pad:
     def __init__(self):
         self.track = None
@@ -7,7 +10,7 @@ class Pad:
 
     def click(self):
         if self.active:
-            print('pressed')
+            AudioServices.play_track(self.track, self.start, self.end)
         else:
             print('Pressed but unassigned')
 
