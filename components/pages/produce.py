@@ -1,6 +1,7 @@
 from components.pages.page import Page
 from tkinter import *
 from services.audio_services import AudioServices
+from services.volume_service import VolumeService
 import tkinter as tk
 
 ALL = N+S+W+E
@@ -64,7 +65,9 @@ class Produce(Page):
 
         volume_frame = Frame(self, width=20, height=20)
         volume_frame.grid(row=0, column=6, sticky=ALL)
-        Scale(volume_frame, from_=0, to=100, orient=HORIZONTAL).pack()
+        self.volume = Scale(volume_frame, from_=0, to=100, orient=HORIZONTAL, command=self.__on_volume_change)
+        self.volume.pack()
+        self.volume.set(100)
         Label(volume_frame, text='Volume').pack()
 
         Button(self, text="Reset", command=self.__reset).grid(row=0, column=9, sticky=ALL)
@@ -136,3 +139,9 @@ class Produce(Page):
         self.knobs_texts[2].set("Panning Filter\nActivate")
         self.knobs_texts[3].set("    Speedup    \nActivate")
         AudioServices.reset_effect()
+
+    def __on_volume_change(self, value):
+        VolumeService.set_volume(value, 'PRODUCE')
+
+    def set_volume(self, value):
+        self.volume.set(value)

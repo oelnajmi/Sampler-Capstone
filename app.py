@@ -4,6 +4,7 @@ from components.pages.produce import Produce
 from components.pages.home import Home
 from components.pages.setup_pad_step_one import SetupPadStepOne
 from components.pages.setup_pad_step_two import SetupPadStepTwo
+from services.volume_service import VolumeService
 from hardware.interface import Interface
 
 
@@ -49,6 +50,9 @@ class App(tk.Frame):
     def get_produce_page(self):
         return self.produce
 
+    def get_listen_page(self):
+        return self.listen
+
     def get_hardware_interface(self):
         return self.hardware_interface
 
@@ -57,5 +61,6 @@ if __name__ == "__main__":
     root = tk.Tk()
     main = App(root)
     main.pack(side="top", fill="both", expand=True)
+    VolumeService.set_global_app(main)
     root.wm_geometry("400x400+120+120")
     root.mainloop()

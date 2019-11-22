@@ -2,6 +2,7 @@ from components.pages.page import Page
 import tkinter as tk
 from services.audio_services import AudioServices
 from services.files_services import FilesServices
+from services.volume_service import VolumeService
 from tkinter import *
 
 ALL = N + S + W + E
@@ -29,7 +30,9 @@ class Listen(Page):
 
         frame1 = Frame(self, width=25, height=25)
         frame1.grid(row=0, column=2, sticky=ALL)
-        Scale(frame1, from_=0, to=100, orient=HORIZONTAL).pack()
+        self.volume = Scale(frame1, from_=0, to=100, orient=HORIZONTAL, command=self.__on_volume_change)
+        self.volume.set(100)
+        self.volume.pack()
         Label(frame1, text='Volume').pack()
 
         self.master.rowconfigure(1, weight=100)
@@ -57,6 +60,12 @@ class Listen(Page):
             AudioServices.end_track()
             self.play_button_status[index] = False
             self.play_button_texts[index].set("Play")
+
+    def __on_volume_change(self, value):
+        VolumeService.set_volume(value, 'LISTEN')
+
+    def set_volume(self, value):
+        self.volume.set(value)
 
     def __reset_all_play_buttons(self):
         for index in range(len(self.play_button_texts)):
