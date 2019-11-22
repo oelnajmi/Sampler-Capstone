@@ -10,7 +10,7 @@ class Pad:
 
     def click(self):
         if self.active:
-            AudioServices.play_track(self.track, self.start, self.end)
+            AudioServices.play_track(self.track, self.start, self.end, apply_effects=True)
         else:
             print('Pressed but unassigned')
 
